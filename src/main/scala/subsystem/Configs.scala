@@ -124,7 +124,10 @@ class WithCluster(
 })
 
 class WithClusterBanks(clusterId: Int, nBanks: Int = 1) extends Config((site, here, up) => {
-  case ClusterBankedCoherenceKey(`clusterId`) => up(ClusterBankedCoherenceKey(clusterId)).copy(nBanks=nBanks)
+  case ClusterBankedCoherenceKey(`clusterId`) => up(ClusterBankedCoherenceKey(clusterId)).copy(
+    nBanks=nBanks,
+    coherenceManager=CoherenceManagerWrapper.broadcastManagerFn("broadcast", InCluster(clusterId), CCBUS(clusterId))
+  )
 })
 
 class WithNBanks(n: Int) extends Config((site, here, up) => {

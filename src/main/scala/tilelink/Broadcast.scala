@@ -51,7 +51,7 @@ class TLBroadcast(params: TLBroadcastParams)(implicit p: Parameters) extends Laz
         endSinkId  = params.numTrackers,
         managers   = mp.managers.map { m =>
           // We are the last level manager
-          require (!m.supportsAcquireB)
+          // require (!m.supportsAcquireB)
           // We only manage addresses which are uncached
           if (m.regionType == RegionType.UNCACHED) {
             // The device had better support line transfers
