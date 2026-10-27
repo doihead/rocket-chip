@@ -59,16 +59,19 @@ class TLFilter(
   lazy val module = new Impl
   class Impl extends LazyModuleImp(this) {
     (node.in zip node.out) foreach { case ((in, edgeIn), (out, edgeOut)) =>
-      out <> in
 
       // In case the inner interface removes Acquire, tie-off the channels
       if (!edgeIn.manager.anySupportAcquireB) {
+        in.a <> out.a
+        in.d <> out.d
         in.b.valid := false.B
         in.c.ready := true.B
         in.e.ready := true.B
         out.b.ready := true.B
         out.c.valid := false.B
         out.e.valid := false.B
+      } else {
+        out <> in
       }
     }
   }
