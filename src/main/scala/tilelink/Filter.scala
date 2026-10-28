@@ -62,7 +62,7 @@ class TLFilter(
 
       // In case the inner interface removes Acquire, tie-off the channels
       if (!edgeIn.manager.anySupportAcquireB) {
-        in.a <> out.a
+        out.a <> in.a
         in.d <> out.d
         in.b.valid := false.B
         in.c.ready := true.B
